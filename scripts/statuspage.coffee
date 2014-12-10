@@ -54,7 +54,7 @@ module.exports = (robot) ->
           incident =
             status: msg.match[1]
             message: msg.match[2]
-            wants_twitter_update: 't'
+            wants_twitter_update: !!process.env.HUBOT_STATUS_TWITTER_UPDATE || 'f'
           params =
             incident: incident
           msg.http("#{baseUrl}/incidents/#{incidentId}.json").headers(authHeader).patch(JSON.stringify params) (err, res, body) ->
@@ -73,7 +73,7 @@ module.exports = (robot) ->
 
     incident =
       status: msg.match[1]
-      wants_twitter_update: "t"
+      wants_twitter_update: !!process.env.HUBOT_STATUS_TWITTER_UPDATE || 'f'
       message: message
       name: name
     params = {incident: incident}
